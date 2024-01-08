@@ -33,3 +33,5 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### node version -> 16.14.2
