@@ -34,8 +34,7 @@ setTimeout(() => {
         margin-top: 24px;
         display: flex;
         .case-item {
-            width: 94px;
-            height: 94px;
+            flex: 1;
             border-radius: 8px;
             background: rgba(207, 231, 236);
             // color: rgba(197, 152, 215);
