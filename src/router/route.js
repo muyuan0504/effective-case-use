@@ -4,6 +4,9 @@ import Index from '../views/index.vue'
 /** StyleOptimize：样式优化 */
 const StyleUse = () => import('@/views/style-use/index.vue')
 
+/** markdown实时渲染 */
+const Markdown = () => import('@/views/markdown/index.vue')
+
 const routes = [
     {
         path: '/',
@@ -24,6 +27,11 @@ const routes = [
                 component: () => StyleUse()
             }
         ]
+    },
+    {
+        path: '/markdown',
+        name: 'markdown',
+        component: Markdown
     }
 ]
 
