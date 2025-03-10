@@ -24,7 +24,11 @@ const md = new MarkdownIt({
     html: true,
     highlight: (code, lang) => {
         const validLang = hljs.getLanguage(lang) ? lang : 'plaintext'
-        return `<pre class="hljs"><code>${hljs.highlight(code, { language: validLang }).value}</code></pre>`
+        return `
+        <pre class="hljs" type="${lang}">
+        <div class="code-header"></div>
+        <div class="code-contain"><code>${hljs.highlight(code, { language: validLang }).value}</code></div>
+        </pre>`
     }
 })
 
@@ -36,11 +40,11 @@ const addCopyButtons = () => {
     nextTick(() => {
         document.querySelectorAll('pre.hljs').forEach((block) => {
             if (!block.querySelector('.copy-button')) {
+                const code = block.innerText
                 const button = document.createElement('button')
                 button.innerText = '📋 复制'
-                button.className = 'copy-button'
+                button.className = 'copy-button-code'
                 button.addEventListener('click', () => {
-                    const code = block.innerText
                     navigator.clipboard.writeText(code).then(() => {
                         button.innerText = '✅ 已复制'
                         setTimeout(() => (button.innerText = '📋 复制'), 2000)
@@ -59,6 +63,15 @@ onMounted(() => {
 })
 </script>
 
+<style>
+/** 代码块样式 */
+.code-header {
+    padding: 8px 16px;
+}
+.code-contain {
+    padding: 16px;
+}
+</style>
 <style scoped>
 textarea {
     width: 100%;
@@ -67,12 +80,21 @@ textarea {
     font-family: monospace;
 }
 
+.markdown-body {
+    /* markdown内容区域 */
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
 .markdown-body pre {
     position: relative;
     background: #282c34;
     padding: 16px;
     border-radius: 8px;
     overflow-x: auto;
+    padding: 0;
+    margin: 0;
 }
 
 .markdown-body code {
@@ -81,7 +103,7 @@ textarea {
     color: #fff;
 }
 
-.copy-button {
+.copy-button-code {
     position: absolute;
     top: 10px;
     right: 10px;
